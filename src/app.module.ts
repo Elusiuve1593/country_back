@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { HealthCheckController } from './app.controller';
 import { HealthCheckService } from './app.service';
-import { DatabaseConfigureModule } from './db/db-config.module';
-import { CountryModule } from './countries/countries.module';
+import { CountryModule } from './modules/country.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [DatabaseConfigureModule, CountryModule],
+  imports: [ConfigModule.forRoot(), CountryModule],
   controllers: [HealthCheckController],
   providers: [HealthCheckService],
 })
