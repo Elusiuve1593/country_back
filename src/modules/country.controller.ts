@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CountryService } from './country.service';
 
 @Controller('countries')
@@ -10,9 +10,9 @@ export class CountryController {
     return this.countryService.getCountries();
   }
 
-  @Get('borders-countries')
-  getBordersCountry() {
-    return this.countryService.getBordersCountry();
+  @Get('/borders/:countryCode')
+  getBordersCountry(@Param('countryCode') countryCode: string) {
+    return this.countryService.getBordersCountry(countryCode);
   }
 
   @Get('population')
@@ -22,6 +22,16 @@ export class CountryController {
 
   @Get('flag')
   getCountryFlag() {
-    return this.countryService.getCountryFlag()
+    return this.countryService.getCountryFlag();
+  }
+
+  @Post('single-country-flag')
+  getSingleConutryFlag(@Body() body: { iso2: string }) {
+    return this.countryService.singleConutryFlag(body.iso2);
+  }
+
+  @Post('single-country-population')
+  getSingleConutryPopulation(@Body() body: { country: string }) {
+    return this.countryService.singleConutryPopulation(body.country);
   }
 }

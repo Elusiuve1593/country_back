@@ -27,10 +27,12 @@ export class CountryService {
     }
   }
 
-  async getBordersCountry(): Promise<CountryBorders[]> {
+  async getBordersCountry(countryCode: string): Promise<CountryBorders[]> {
     try {
       const bordersCountry = await axios.get<CountryBorders[]>(
-        this.configService.get<string>('API_NAGER') + COUNTRY_INFO,
+        this.configService.get<string>('API_NAGER') +
+          COUNTRY_INFO +
+          countryCode,
       );
       return bordersCountry.data;
     } catch (err) {
@@ -55,6 +57,30 @@ export class CountryService {
         this.configService.get<string>('API_COUNTRIESNOW') + FLAG,
       );
       return countryFlag.data;
+    } catch (err) {
+      throw new HttpException('Fetching error', 500);
+    }
+  }
+
+  async singleConutryFlag(iso2: string): Promise<CountryFlag> {
+    try {
+      const oneContryFlag = await axios.post<CountryFlag>(
+        this.configService.get<string>('API_COUNTRIESNOW') + FLAG,
+        { iso2 },
+      );
+      return oneContryFlag.data;
+    } catch (err) {
+      throw new HttpException('Fetching error', 500);
+    }
+  }
+
+  async singleConutryPopulation(country: string): Promise<CountryPopulation> {
+    try {
+      const oneContryPopulation = await axios.post<CountryPopulation>(
+        this.configService.get<string>('API_COUNTRIESNOW') + POPULATION,
+        { country },
+      );
+      return oneContryPopulation.data;
     } catch (err) {
       throw new HttpException('Fetching error', 500);
     }
