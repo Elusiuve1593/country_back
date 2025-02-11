@@ -40,28 +40,6 @@ export class CountryService {
     }
   }
 
-  async getPopulation(): Promise<CountryPopulation[]> {
-    try {
-      const countryPopulation = await axios.get<CountryPopulation[]>(
-        this.configService.get<string>('API_COUNTRIESNOW') + POPULATION,
-      );
-      return countryPopulation.data;
-    } catch (err) {
-      throw new HttpException('Fetching error', 500);
-    }
-  }
-
-  async getCountryFlag(): Promise<CountryFlag[]> {
-    try {
-      const countryFlag = await axios.get<CountryFlag[]>(
-        this.configService.get<string>('API_COUNTRIESNOW') + FLAG,
-      );
-      return countryFlag.data;
-    } catch (err) {
-      throw new HttpException('Fetching error', 500);
-    }
-  }
-
   async singleConutryFlag(iso2: string): Promise<CountryFlag> {
     try {
       const oneContryFlag = await axios.post<CountryFlag>(

@@ -15,16 +15,6 @@ export class CountryController {
     return this.countryService.getBordersCountry(countryCode);
   }
 
-  @Get('population')
-  getPopulation() {
-    return this.countryService.getPopulation();
-  }
-
-  @Get('flag')
-  getCountryFlag() {
-    return this.countryService.getCountryFlag();
-  }
-
   @Post('single-country-flag')
   getSingleConutryFlag(@Body() body: { iso2: string }) {
     return this.countryService.singleConutryFlag(body.iso2);
